@@ -1,0 +1,16 @@
+[package]
+name = "jensenlab-textmining-rs"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+categories.workspace = true
+keywords = ["jensenlab", "text-mining", "arrow", "biomedical"]
+description = "Literature-derived entity associations from JensenLab text mining"
+
+[dependencies]
+
+[lints]
+workspace = true

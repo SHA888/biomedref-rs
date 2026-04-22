@@ -1,0 +1,16 @@
+[package]
+name = "foodb-rs"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+categories.workspace = true
+keywords = ["foodb", "food-composition", "arrow", "nutrients"]
+description = "Food composition — compounds, nutrients, cross-refs to PubChem/ChEBI/KEGG/HMDB"
+
+[dependencies]
+
+[lints]
+workspace = true

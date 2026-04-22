@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*-v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      crate: ${{ steps.extract.outputs.crate }}
+      version: ${{ steps.extract.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract crate name and version
+        id: extract
+        run: |
+          TAG="${{ github.ref_name }}"
+          CRATE_NAME="${TAG%-v*}"
+          VERSION="${TAG##*-v}"
+          echo "crate=$CRATE_NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.extract.outputs.crate }} ${{ steps.extract.outputs.version }}
+          draft: false
+          prerelease: false
+
+  publish:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+    needs: create-release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: true
+      - name: Publish ${{ needs.create-release.outputs.crate }}
+        run: cargo publish -p ${{ needs.create-release.outputs.crate }} --all-features
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+
+  update-changelog:
+    name: Update Changelog
+    runs-on: ubuntu-latest
+    needs: [create-release, publish]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+          token: ${{ secrets.GH_PAT }}
+      - name: Install git-cliff
+        uses: taiki-e/install-action@git-cliff
+      - name: Update changelog
+        run: |
+          git-cliff --latest --strip header -o CHANGELOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "chore: update CHANGELOG.md"
+          git push

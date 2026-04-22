@@ -25,22 +25,22 @@ Each crate publishes independently. No intra-workspace dependencies are expected
 
 ---
 
-## SPRINT 0 — Workspace bootstrap  *(deferred)*
+## SPRINT 0 — Workspace bootstrap
 > Gate: first consumer request for any crate in this workspace.
 
-- [ ] S0.1 Create `github.com/SHA888/biomedref-rs` (public)
-- [ ] S0.2 `LICENSE-MIT` + `LICENSE-APACHE`
-- [ ] S0.3 `CONTRIBUTING.md` — same conventions as `multiomics-rs`
-- [ ] S0.4 `CODE_OF_CONDUCT.md` — Contributor Covenant v2.1
-- [ ] S0.5 `SECURITY.md` — data correctness bugs = security severity
-- [ ] S0.6 Workspace `Cargo.toml`, same template as `multiomics-rs`
-- [ ] S0.7 `rust-toolchain.toml` pinning latest stable
-- [ ] S0.8 `deny.toml` — same policy as `multiomics-rs`
-- [ ] S0.9 CI workflows (ci.yml, release.yml, audit.yml)
-- [ ] S0.10 Empty crate scaffolds (jensenlab-textmining-rs,
+- [x] S0.1 Create `github.com/SHA888/biomedref-rs` (public)
+- [x] S0.2 `LICENSE-MIT` + `LICENSE-APACHE`
+- [x] S0.3 `CONTRIBUTING.md` — same conventions as `multiomics-rs`
+- [x] S0.4 `CODE_OF_CONDUCT.md` — Contributor Covenant v2.1
+- [x] S0.5 `SECURITY.md` — data correctness bugs = security severity
+- [x] S0.6 Workspace `Cargo.toml`, same template as `multiomics-rs`
+- [x] S0.7 `rust-toolchain.toml` pinning latest stable
+- [x] S0.8 `deny.toml` — same policy as `multiomics-rs`
+- [x] S0.9 CI workflows (ci.yml, release.yml, audit.yml)
+- [x] S0.10 Empty crate scaffolds (jensenlab-textmining-rs,
            exposome-explorer-rs, foodb-rs) with stub `src/lib.rs`,
            `README.md`, `CHANGELOG.md`
-- [ ] S0.11 `cargo check --workspace` passes on empty scaffold
+- [x] S0.11 `cargo check --workspace` passes on empty scaffold
 - [ ] S0.12 CI green on `main`
 
 ---
