@@ -45,7 +45,7 @@ Each crate publishes independently. No intra-workspace dependencies are expected
 
 ---
 
-## jensenlab-textmining-rs — v0.1.0  *(planned)*
+## jensenlab-textmining-rs — v0.1.0
 > Literature-derived entity associations from JensenLab text mining at jensenlab.org.
 > Weekly updates; large open-access literature corpus processed with the Tagger tool.
 
@@ -55,23 +55,23 @@ chemicals, tissues, environments, subcellular compartments, biological processes
 **License:** CC BY 4.0
 **Update cycle:** weekly
 
-- [ ] JT1.1 TSV reader for `*_mentions.tsv.gz` (gzipped; use `flate2`)
+- [x] JT1.1 TSV reader for `*_mentions.tsv.gz` (gzipped; use `flate2`)
   - `EntityMention` → RecordBatch
   - columns: entity_id (Utf8), entity_type (Utf8), publication_id (Utf8),
     confidence_score (Float64), first_mention_at (Timestamp)
-- [ ] JT1.2 Pairwise association reader for `*_pairs.tsv.gz` files
+- [x] JT1.2 Pairwise association reader for `*_pairs.tsv.gz` files
   - `EntityAssociation` → RecordBatch
   - columns: entity_a, entity_a_type, entity_b, entity_b_type,
     association_type, publication_count, confidence_score
-- [ ] JT1.3 Entity type taxonomy — JensenLab uses numeric type codes internally
+- [x] JT1.3 Entity type taxonomy — JensenLab uses numeric type codes internally
            (e.g., -22 for compartments, 9606 for proteins in H. sapiens);
            emit as canonical string type names, preserve numeric code as
            metadata for traceability
-- [ ] JT1.4 Streaming design — text-mining files are large
+- [x] JT1.4 Streaming design — text-mining files are large
            (~GB range for protein mentions); never materialize full dataset
-- [ ] JT1.5 CC BY 4.0 license flag in Arrow schema metadata
-- [ ] JT1.6 Tests against small synthetic fixtures
-- [ ] JT1.7 Publish `0.1.0`
+- [x] JT1.5 CC BY 4.0 license flag in Arrow schema metadata
+- [x] JT1.6 Tests against small synthetic fixtures
+- [x] JT1.7 Publish `0.1.0`
 
 ---
 
