@@ -72,6 +72,10 @@ chemicals, tissues, environments, subcellular compartments, biological processes
 - [x] JT1.5 CC BY 4.0 license flag in Arrow schema metadata
 - [x] JT1.6 Tests against small synthetic fixtures
 - [x] JT1.7 Publish `0.1.0`
+- [-] JT1.8 Strict validation — reject empty required fields instead of `unwrap_or("")`
+- [-] JT1.9 Separate error variant for publication count parse errors (currently reuses `InvalidScore`)
+- [-] JT1.10 Schema-cloning micro-optimization (store `SchemaRef` once, clone `Arc` only)
+- [-] JT1.11 Cross-reference numeric codes to taxonomy module in doc comments
 
 ---
 
@@ -144,5 +148,5 @@ that might join if consumer demand emerges. None are in active roadmap:
 
 ---
 
-*Last updated: 2026-04-20. Scaffold-only. v0.1 records scope and policy before
-any implementation begins. No active work; Sprint 0 deferred.*
+*Last updated: 2026-04-29. `jensenlab-textmining-rs` v0.1.0 published; review
+findings deferred as maintenance items.*
