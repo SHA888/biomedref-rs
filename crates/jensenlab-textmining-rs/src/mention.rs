@@ -145,7 +145,7 @@ impl<R: Read> EntityMentionReader<R> {
     /// let reader = EntityMentionReader::new(decoder, None).unwrap();
     /// ```
     pub fn new(input: R, batch_size: Option<usize>) -> Result<Self> {
-        let batch_size = batch_size.unwrap_or(DEFAULT_BATCH_SIZE);
+        let batch_size = batch_size.filter(|&s| s > 0).unwrap_or(DEFAULT_BATCH_SIZE);
 
         let reader = csv::ReaderBuilder::new()
             .delimiter(b'\t')
@@ -194,13 +194,19 @@ fn build_batch(records: &[EntityMention], schema: &SchemaRef) -> crate::error::R
     let entity_type_codes: Vec<i64> = records.iter().map(|r| r.entity_type_code).collect();
     let publication_ids: Vec<&str> = records.iter().map(|r| r.publication_id.as_str()).collect();
     let confidence_scores: Vec<f64> = records.iter().map(|r| r.confidence_score).collect();
-    let first_mention_ats: Vec<Option<i64>> = records
+    let first_mention_ats: crate::error::Result<Vec<Option<i64>>> = records
         .iter()
         .map(|r| {
             r.first_mention_at
-                .map(|dt| dt.timestamp_nanos_opt().unwrap_or(0))
+                .map(|dt| {
+                    dt.timestamp_nanos_opt().ok_or_else(|| {
+                        Error::InvalidTimestamp(format!("timestamp out of nanosecond range: {dt}"))
+                    })
+                })
+                .transpose()
         })
         .collect();
+    let first_mention_ats = first_mention_ats?;
 
     // Build timestamp array with proper timezone handling
     let timestamps: arrow::array::PrimitiveArray<arrow::datatypes::TimestampNanosecondType> =

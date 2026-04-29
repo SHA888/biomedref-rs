@@ -148,7 +148,7 @@ impl<R: Read> EntityAssociationReader<R> {
     ///
     /// Returns an error if the input cannot be read.
     pub fn new(input: R, batch_size: Option<usize>) -> Result<Self> {
-        let batch_size = batch_size.unwrap_or(DEFAULT_BATCH_SIZE);
+        let batch_size = batch_size.filter(|&s| s > 0).unwrap_or(DEFAULT_BATCH_SIZE);
 
         let reader = csv::ReaderBuilder::new()
             .delimiter(b'\t')
